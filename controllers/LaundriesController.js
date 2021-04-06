@@ -1,5 +1,6 @@
 const { Laundry, Customer, Employee } = require('../models')
 const costFormat = require('../helpers/costFormat')
+const weightFormat = require('../helpers/weightFormat')
 
 class LaundriesController {
   static list(req, res) {
@@ -8,7 +9,7 @@ class LaundriesController {
       include: [Customer, Employee]
       })
     .then(laundries => {
-      res.render('laundries', { laundries, costFormat })
+      res.render('laundries', { laundries, costFormat, weightFormat })
     })
     .catch(err => {
       res.send(err)
