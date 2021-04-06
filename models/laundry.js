@@ -1,4 +1,5 @@
 'use strict';
+const moment = require('moment');
 const {
   Model
 } = require('sequelize');
@@ -24,6 +25,7 @@ module.exports = (sequelize, DataTypes) => {
     weight: DataTypes.FLOAT,
     entry_date: DataTypes.DATE,
     finish_date: DataTypes.DATE,
+    process_days: DataTypes.INTEGER,
     total_cost: DataTypes.INTEGER
   }, {
     sequelize,
@@ -33,12 +35,8 @@ module.exports = (sequelize, DataTypes) => {
     Laundry.belongsTo(models.Employee)
     Laundry.belongsTo(models.Customer)
   }
-  Laundry.addHook('afterUpdate', 'finishLaundry', (laundry) => {
-    if (laundry.finish_date) {
-
-    } else {
-
-    }
+  Laundry.addHook('beforeUpdate', 'daysProcess', (laundry) => {
+    if (laundry.finish_date) laundry.process_days = moment(laundry.finish_date).diff(moment(laundry.entry_date), 'days');
   })
   return Laundry;
 };
