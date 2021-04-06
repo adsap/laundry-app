@@ -1,5 +1,6 @@
 const { Laundry, Customer, Employee, sequelize } = require('../models')
 const moment = require('moment');
+const costFormat = require('../helpers/costFormat')
 
 class LaundriesController {
   static list(req, res) {
@@ -18,7 +19,7 @@ class LaundriesController {
           entry_date: moment(laundry.entry_date).format('YYYY-MM-DD')
         }
       });
-      res.render('laundries', { laundries })
+      res.render('laundries', { laundries, costFormat })
     })
     .catch(err => {
       res.send(err)

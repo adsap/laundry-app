@@ -1,12 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Laundries</title>
-</head>
-<body>
+<%-include('partials/header.ejs' , {title : 'List Laundry'}) %>
   <div><h2>List Laundry</h2></div>
   <div>
     <p><a href="laundry/add"><button>Add New Laundry</button></a></p>
@@ -35,7 +27,7 @@
           <td><%= laundry.weight %></td>
           <td><%= laundry.entry_date %></td>
           <td><%= laundry.finish_date %></td>
-          <td><%= laundry.total_cost %></td>
+          <td><%= costFormat(laundry.total_cost) %></td>
           <td>
             <a href="/laundry/edit/<%= laundry.id %>"><button>Edit</button></a>
             <a href="/laundry/delete/<%= laundry.id %>"><button>Delete</button></a>
@@ -45,5 +37,4 @@
       </tbody>
     </table>
   </div>
-</body>
-</html>
+<%-include('partials/footer.ejs') %>
