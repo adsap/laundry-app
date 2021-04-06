@@ -26,6 +26,9 @@ module.exports = {
       finish_date: {
         type: Sequelize.DATE
       },
+      process_days: {
+        type: Sequelize.INTEGER
+      },
       total_cost: {
         type: Sequelize.INTEGER
       },

@@ -96,7 +96,6 @@ class LaundriesController {
     const { id } = req.params
     const { CustomerId, EmployeeId, laundry_type, weight, entry_date, finish_date } = req.body
     let total_cost = priceCalculate(laundry_type, weight);
-    console.log(finish_date - entry_date, "<<<<<<")
 
     Laundry.findByPk(+id)
     .then(laundry => {
