@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Laundries</title>
+</head>
+<body>
+  <div><h2>List Laundry</h2></div>
+  <div>
+    <p><a href="laundry/add"><button>Add New Laundry</button></a></p>
+  </div>
+  <div>
+    <table border="1">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Customer</th>
+          <th>Employee</th>
+          <th>Laundry Type</th>
+          <th>Weight</th>
+          <th>Entry Date</th>
+          <th>Finish Date</th>
+          <th>Total Cost</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% laundries.forEach(laundry => { %>
+        <tr>
+          <td><a href="/laundry/<%= laundry.id %>"><%= laundry.id %></a></td>
+          <td><%= laundry.Customer.name %></td>
+          <td><%= laundry.Employee.name %></td>
+          <td><%= laundry.laundry_type %></td>
+          <td><%= laundry.weight %></td>
+          <td><%= laundry.entry_date %></td>
+          <td><%= laundry.finish_date %></td>
+          <td><%= laundry.total_cost %></td>
+          <td>
+            <a href="/laundry/edit/<%= laundry.id %>"><button>Edit</button></a>
+            <a href="/laundry/delete/<%= laundry.id %>"><button>Delete</button></a>
+          </td>
+        </tr>
+        <% }) %> 
+      </tbody>
+    </table>
+  </div>
+</body>
+</html>

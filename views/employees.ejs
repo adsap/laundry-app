@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Employees</title>
+</head>
+<body>
+  <div><h2>List Employee</h2></div>
+  <div>
+    <p><a href="employee/add"><button>Add New Employee</button></a></p>
+  </div>
+  <div>
+    <table border="1">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Phone</th>
+          <th>Email</th>
+          <th>Address</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% employees.forEach(employee => { %>
+        <tr>
+          <td><a href="/employee/<%= employee.id %>"><%= employee.name %></a></td>
+          <td><%= employee.phone %></td>
+          <td><%= employee.email %></td>
+          <td><%= employee.address %></td>
+          <td>
+            <a href="/employee/edit/<%= employee.id %>"><button>Edit</button></a>
+            <a href="/employee/delete/<%= employee.id %>"><button>Delete</button></a>
+          </td>
+        </tr>
+        <% }) %> 
+      </tbody>
+    </table>
+  </div>
+</body>
+</html>
