@@ -1,4 +1,5 @@
-const { Laundry, Customer, Employee } = require('../models')
+const { Laundry, Customer, Employee, sequelize } = require('../models')
+const moment = require('moment');
 const costFormat = require('../helpers/costFormat')
 
 class LaundriesController {
@@ -8,6 +9,16 @@ class LaundriesController {
       include: [Customer, Employee]
       })
     .then(laundries => {
+      laundries = laundries.map(laundry => {
+        return {
+          ...laundry,
+          id: laundry.id,
+          laundry_type: laundry.laundry_type,
+          weight: laundry.weight,
+          total_cost: laundry.total_cost,
+          entry_date: moment(laundry.entry_date).format('YYYY-MM-DD')
+        }
+      });
       res.render('laundries', { laundries, costFormat })
     })
     .catch(err => {
@@ -61,10 +72,19 @@ class LaundriesController {
       employees = employeeData;
       return Laundry.findByPk(+id, { 
         order: [['entry_date', 'DESC']],
-        include: [Customer, Employee]
+        include: [Customer, Employee],
+        attributes: [
+          'id',
+          'CustomerId',
+          'EmployeeId',
+          'laundry_type',
+          'weight',
+          [sequelize.fn('to_char', sequelize.col('entry_date'), 'YYYY-MM-DD'), 'entry_date'],
+          [sequelize.fn('to_char', sequelize.col('finish_date'), 'YYYY-MM-DD'), 'finish_date']
+        ]
         })
     })
-    .then(laundry => {
+    .then(laundry => {     
       res.render('laundryEditForm', { customers, employees, laundry })
     })
     .catch(err => {
