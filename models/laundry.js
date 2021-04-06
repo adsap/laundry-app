@@ -33,5 +33,12 @@ module.exports = (sequelize, DataTypes) => {
     Laundry.belongsTo(models.Employee)
     Laundry.belongsTo(models.Customer)
   }
+  Laundry.addHook('afterUpdate', 'finishLaundry', (laundry) => {
+    if (laundry.finish_date) {
+
+    } else {
+
+    }
+  })
   return Laundry;
 };

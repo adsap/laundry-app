@@ -13,7 +13,6 @@
           <th>Laundry Type</th>
           <th>Weight</th>
           <th>Entry Date</th>
-          <th>Finish Date</th>
           <th>Total Cost</th>
         </tr>
       </thead>
@@ -26,11 +25,10 @@
           <td><%= laundry.laundry_type %></td>
           <td><%= laundry.getKg() %></td>
           <td><%= moment(laundry.entry_date).format('YYYY-MM-DD') %></td>
-          <td><%= laundry.finish_date %></td>
           <td><%= costFormat(laundry.total_cost) %></td>
           <td>
             <a href="/laundry/edit/<%= laundry.id %>"><button>Edit</button></a>
-            <button type="submit">Finish</button>
+            <a href="/laundry/<%= laundry.id %>/finished"><button type="submit">Finish</button></a>
           </td>
         </tr>
         <% }) %> 
@@ -53,22 +51,24 @@
         </tr>
       </thead>
       <tbody>
-        <% laundries.forEach(laundry => { %>
-        <tr>
-          <td></td>
-          <td><%=  %></td>
-          <td><%=  %></td>
-          <td><%=  %></td>
-          <td><%=  %><td>
-          <td><%=  %></td>
-          <td><%=  %></td>
-          <td><%= %></td>
-          <td>
-            <button type="submit">Notify</button>
-            <a href="/laundry/delete/<%= laundry.id %>"><button>Taken</button></a>
-          </td>
-        </tr>
-        <% }) %> 
+        <% if (laundriesFinished) { %>
+          <% laundriesFinished.forEach(laundryFinished => { %>
+          <tr>
+            <td><%= laundryFinished.id %></td>
+            <td><%= laundryFinished.Customer.name %></td>
+            <td><%= laundryFinished.Employee.name %></td>
+            <td><%= laundryFinished.laundry_type %></td>
+            <td><%= laundryFinished.getKg() %></td>
+            <td><%= moment(laundryFinished.entry_date).format('YYYY-MM-DD') %></td>
+            <td><%= moment(laundryFinished.finish_date).format('YYYY-MM-DD') %></td>
+            <td><%= laundryFinished.total_cost %><td></td>
+            <td>
+              <button type="submit">Notify</button>
+              <a href=""><button>Taken</button></a>
+            </td>
+          </tr>
+          <% }) %> 
+        <% } %>
       </tbody>
     </table>
   </div>
