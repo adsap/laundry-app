@@ -24,7 +24,7 @@
           <td><%= laundry.Customer.name %></td>
           <td><%= laundry.Employee.name %></td>
           <td><%= laundry.laundry_type %></td>
-          <td><%= laundry.weight %></td>
+          <td><%= weightFormat(laundry.weight) %></td>
           <td><%= laundry.entry_date %></td>
           <td><%= laundry.finish_date %></td>
           <td><%= costFormat(laundry.total_cost) %></td>
