@@ -9,5 +9,6 @@ router.get('/edit/:id', LaundriesController.editForm)
 router.post('/edit/:id', LaundriesController.edit)
 router.get('/delete/:id', LaundriesController.delete)
 router.get('/:id', LaundriesController.detail)
+router.get('/:id/finished', LaundriesController.finished)
 
 module.exports = router

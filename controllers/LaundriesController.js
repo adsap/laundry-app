@@ -1,7 +1,6 @@
 const { Laundry, Customer, Employee, sequelize } = require('../models')
 const moment = require('moment');
 const costFormat = require('../helpers/costFormat')
-const weightFormat = require('../helpers/weightFormat')
 
 class LaundriesController {
   static list(req, res) {
@@ -155,6 +154,9 @@ class LaundriesController {
       .catch(err => {
         res.send(err)
       })
+  }
+  static finished(req, res) {
+
   }
 }
 
