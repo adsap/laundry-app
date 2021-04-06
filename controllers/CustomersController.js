@@ -83,8 +83,8 @@ class CustomersController {
     const { id } = req.params
 
     Customer.findByPk(+id)
-      .then(costumer => {
-        res.render('customerDetail')
+      .then(customer => {
+        res.render('customerDetail', { customer })
       })
       .catch(err => {
         res.send(err)
