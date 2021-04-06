@@ -136,6 +136,9 @@ class LaundriesController {
         res.send(err)
       })
   }
+  static finished(req, res) {
+
+  }
 }
 
 module.exports = LaundriesController
