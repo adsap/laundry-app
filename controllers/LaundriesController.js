@@ -1,7 +1,7 @@
 const { Laundry, Customer, Employee, sequelize } = require('../models')
 const moment = require('moment');
 const costFormat = require('../helpers/costFormat')
-const weightFormat = require('../helpers/weightFormat')
+const priceCalculate = require('../helpers/priceCalculate')
 
 class LaundriesController {
   static list(req, res) {
@@ -9,18 +9,8 @@ class LaundriesController {
       order: [['entry_date', 'DESC']],
       include: [Customer, Employee]
       })
-    .then(laundries => {
-      laundries = laundries.map(laundry => {
-        return {
-          ...laundry,
-          id: laundry.id,
-          laundry_type: laundry.laundry_type,
-          weight: laundry.weight,
-          total_cost: laundry.total_cost,
-          entry_date: moment(laundry.entry_date).format('YYYY-MM-DD')
-        }
-      });
-      res.render('laundries', { laundries, costFormat, weightFormat })
+    .then((laundries) => {
+      res.render('laundries', { laundries, costFormat, moment })
     })
     .catch(err => {
       res.send(err)
@@ -45,13 +35,8 @@ class LaundriesController {
 
   static add(req, res) {
     const { CustomerId, EmployeeId, laundry_type, weight, entry_date } = req.body
-    let total_cost
-    if (laundry_type === "dry cleaning") {
-      total_cost = weight * 5000
-    } else {
-      total_cost = weight * 7000
-    }
-
+    let total_cost = priceCalculate(laundry_type, weight);
+  
     Laundry.create({ CustomerId, EmployeeId, laundry_type, weight, entry_date, total_cost })
     .then(laundry => {
       res.redirect('/laundry')
@@ -96,12 +81,7 @@ class LaundriesController {
   static edit(req, res) {
     const { id } = req.params
     const { CustomerId, EmployeeId, laundry_type, weight, entry_date, finish_date } = req.body
-    let total_cost
-    if (laundry_type === "dry cleaning") {
-      total_cost = weight * 5000
-    } else {
-      total_cost = weight * 7000
-    }
+    let total_cost = priceCalculate(laundry_type, weight);
 
     Laundry.findByPk(+id)
     .then(laundry => {
