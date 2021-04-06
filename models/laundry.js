@@ -4,6 +4,9 @@ const {
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Laundry extends Model {
+    getKg() {
+      return this.weight + " KG";
+    }
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
