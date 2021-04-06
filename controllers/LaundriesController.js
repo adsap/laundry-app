@@ -1,16 +1,27 @@
 const { Laundry, Customer, Employee, sequelize } = require('../models')
 const moment = require('moment');
 const costFormat = require('../helpers/costFormat')
-const priceCalculate = require('../helpers/priceCalculate')
+const priceCalculate = require('../helpers/priceCalculate');
+const Op = require('sequelize').Op;
 
 class LaundriesController {
   static list(req, res) {
+    let laundries
     Laundry.findAll({ 
       order: [['entry_date', 'DESC']],
       include: [Customer, Employee]
       })
-    .then((laundries) => {
-      res.render('laundries', { laundries, costFormat, moment })
+    .then((laundriesData) => {
+      laundries = laundriesData
+      return Laundry.findAll({
+        where: {
+          finish_date: {[Op.not]: null}
+        },
+        include: [Customer, Employee]
+      })
+    })
+    .then(laundriesFinished => {
+      res.render('laundries', { laundries, laundriesFinished, costFormat, moment })
     })
     .catch(err => {
       res.send(err)
@@ -130,14 +141,30 @@ class LaundriesController {
       include: [Customer, Employee]
       })
       .then(laundry => {
-        res.render('laundryDetail', { laundry })
+        res.render('laundryDetail', { laundry, moment })
       })
       .catch(err => {
         res.send(err)
       })
   }
-  static finished(req, res) {
 
+  static finished(req, res) {
+    const { id } = req.params
+
+    Laundry.findByPk(+id)
+    .then(laundry => {
+      if(laundry) {
+        laundry.finish_date = new Date();
+        return laundry.save()
+      }
+      else throw 'laundry tidak ditemukan'
+    })
+    .then(laundry => {
+      res.redirect('/laundry')
+    })
+    .catch(err => {
+      res.send(err)
+    })
   }
 }
 

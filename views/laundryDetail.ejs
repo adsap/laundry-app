@@ -30,12 +30,16 @@
       <tr>
         <td>Entry Date</td>
         <td>:</td>
-        <td><%= laundry.entry_date %></td>
+        <td><%= moment(laundry.entry_date).format('YYYY-MM-DD') %></td>
       </tr>
       <tr>
         <td>Finish Date</td>
         <td>:</td>
-        <td><%= laundry.finish_date %></td>
+        <% if (laundry.finish_date) { %>
+          <td><%= moment(laundry.finish_date).format('YYYY-MM-DD') %></td>
+        <% } else { %>
+          <td>On Process</td>
+        <% } %>
       </tr>
       <tr>
         <td>Total Cost</td>
