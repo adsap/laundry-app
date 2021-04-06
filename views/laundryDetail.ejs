@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Laundries Detail</title>
+</head>
+<body>
+  <div><h2>Laundries Detail</h2></div>
+  <div>
+    <table>
+      <tr>
+        <td>ID</td>
+        <td>:</td>
+        <td><%= laundry.id %></td>
+      </tr>
+      <tr>
+        <td>Customer</td>
+        <td>:</td>
+        <td><%= laundry.Customer.name %></td>
+      </tr>
+      <tr>
+        <td>Employee</td>
+        <td>:</td>
+        <td><%= laundry.Employee.name %></td>
+      </tr>
+      <tr>
+        <td>Laundry Type</td>
+        <td>:</td>
+        <td><%= laundry.laundry_type %></td>
+      </tr>
+      <tr>
+        <td>Weight</td>
+        <td>:</td>
+        <td><%= laundry.weight %></td>
+      </tr>
+      <tr>
+        <td>Entry Date</td>
+        <td>:</td>
+        <td><%= laundry.entry_date %></td>
+      </tr>
+      <tr>
+        <td>Finish Date</td>
+        <td>:</td>
+        <td><%= laundry.finish_date %></td>
+      </tr>
+      <tr>
+        <td>Total Cost</td>
+        <td>:</td>
+        <td><%= laundry.total_cost %></td>
+      </tr>
+    </table>
+  </div>
+</body>
+</html>
