@@ -1,12 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Add New Employee</title>
-</head>
-<body>
+<%-include('partials/header.ejs' , {title : 'Add New Employee'}) %>
+
   <div><h2>Add New Employee</h2></div>
   <div>
     <form action="/employee/add" method="POST">
@@ -48,5 +41,4 @@
       <a href="/employee"><button type="button">Cancel</button></a>
     </form>
   </div>
-</body>
-</html>
+<%-include('partials/footer.ejs') %>
