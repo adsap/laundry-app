@@ -63,7 +63,7 @@
             <td><%= moment(laundryFinished.entry_date).format('YYYY-MM-DD') %></td>
             <td><%= moment(laundryFinished.finish_date).format('YYYY-MM-DD') %></td>
             <td><%= laundryFinished.process_days %></td>
-            <td><%= laundryFinished.total_cost %><td></td>
+            <td><%= costFormat(laundryFinished.total_cost) %></td>
             <td>
               <button type="submit">Notify</button>
               <a href=""><button>Taken</button></a>
