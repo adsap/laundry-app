@@ -24,8 +24,8 @@
           <td><%= laundry.Customer.name %></td>
           <td><%= laundry.Employee.name %></td>
           <td><%= laundry.laundry_type %></td>
-          <td><%= weightFormat(laundry.weight) %></td>
-          <td><%= laundry.entry_date %></td>
+          <td><%= laundry.getKg() %></td>
+          <td><%= moment(laundry.entry_date).format('YYYY-MM-DD') %></td>
           <td><%= laundry.finish_date %></td>
           <td><%= costFormat(laundry.total_cost) %></td>
           <td>
