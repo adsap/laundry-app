@@ -2,6 +2,7 @@ const { Laundry, Customer, Employee, sequelize } = require('../models')
 const moment = require('moment');
 const costFormat = require('../helpers/costFormat')
 const priceCalculate = require('../helpers/priceCalculate');
+const { createInvoice } = require("../helpers/createInvoice.js");
 const Op = require('sequelize').Op;
 
 class LaundriesController {
@@ -51,13 +52,40 @@ class LaundriesController {
     const { CustomerId, EmployeeId, laundry_type, weight, entry_date } = req.body
     let total_cost = priceCalculate(laundry_type, weight);
   
-    Laundry.create({ CustomerId, EmployeeId, laundry_type, weight, entry_date, total_cost })
+    Laundry.create({ CustomerId, EmployeeId, laundry_type, weight, entry_date, total_cost, include: [Customer, Employee]})
     .then(laundry => {
+      return Laundry.findAll({
+        limit: 1,
+        order: [[ 'createdAt', 'DESC' ]],
+        include: [Customer, Employee]
+      })
+    })
+    .then((laundry) => {
+      // console.log(laundry[0].Customer.name)
+      const invoice = {
+        shipping: {
+          name: laundry[0].Customer.name,
+          address: laundry[0].Customer.address,
+          email: laundry[0].Customer.email,
+          phone: laundry[0].Customer.phone
+        },
+        items: [
+          {
+            laundry_type: laundry[0].laundry_type,
+            weight: laundry[0].weight,
+            costkg: laundry[0].total_cost / laundry[0].weight,
+            total: laundry[0].total_cost
+          }
+        ],
+        invoice_nr: laundry[0].id
+      }
+      createInvoice(invoice, `./invoices/invoice-${laundry[0].id}.pdf`);
       res.redirect('/laundry')
     })
     .catch(err => {
       res.send(err)
     })
+    
   }
 
   static editForm(req, res) {
