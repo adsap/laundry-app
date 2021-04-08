@@ -65,8 +65,7 @@
             <td><%= laundryFinished.process_days %></td>
             <td><%= laundryFinished.total_cost %><td></td>
             <td>
-              <button type="submit">Notify</button>
-              <a href=""><button>Taken</button></a>
+              <a href="laundry/<%= laundryFinished.id %>/notify"><button>Notify</button></a>
             </td>
           </tr>
           <% }) %> 

@@ -10,5 +10,6 @@ router.post('/edit/:id', LaundriesController.edit)
 router.get('/delete/:id', LaundriesController.delete)
 router.get('/:id', LaundriesController.detail)
 router.get('/:id/finished', LaundriesController.finished)
+router.get('/:id/notify', LaundriesController.sendEmail)
 
 module.exports = router

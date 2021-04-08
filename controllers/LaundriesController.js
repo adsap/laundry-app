@@ -4,6 +4,7 @@ const costFormat = require('../helpers/costFormat')
 const priceCalculate = require('../helpers/priceCalculate');
 const { createInvoice } = require("../helpers/createInvoice.js");
 const Op = require('sequelize').Op;
+const nodemailer = require('nodemailer');
 
 class LaundriesController {
   static list(req, res) {
@@ -55,7 +56,7 @@ class LaundriesController {
     if (!laundry_type) {
       laundry_type = Laundry.getNoType()
     }
-    
+
     Laundry.create({ CustomerId, EmployeeId, laundry_type, weight, entry_date, total_cost })
     .then(() => {
       return Laundry.findAll({
@@ -201,6 +202,46 @@ class LaundriesController {
     .catch(err => {
       res.send(err)
     })
+  }
+
+  static sendEmail(req, res) {
+    console.log(process.env.NODEMAILER_SERVICE)
+    const {id} = req.params
+
+    Laundry.findByPk(id, {include: [Customer]})
+    .then((data) => {
+        let mailTransporter = nodemailer.createTransport({
+            host: 'smtp.gmail.com',
+            port: 465,
+            secure: true,
+            auth: {
+                user: `####`,
+                pass: `####`
+            }
+        });
+        
+        let mailDetails = {
+            from: '####',
+            to: `${data.Customer.email}`,
+            subject: 'Pemberitahuan Laundry Selesai',
+            text: `
+              Halo ${data.Customer.name},
+              laundry dengan nomor : ${data.id} 
+              telah selesai dan bisa diambil.
+              Terima Kasih`
+        };
+        
+        mailTransporter.sendMail(mailDetails, function(err, data) {
+            if(err) {
+                console.log(err)
+            } else {
+                res.redirect(`/laundry`);
+            }
+        });
+    })
+    .catch((err) => {
+        res.send(err)    
+    });
   }
 }
 
