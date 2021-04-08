@@ -1,4 +1,5 @@
 const { Employee } = require('../models')
+const bcrypt = require('bcryptjs')
 
 class EmployeesController {
   static list(req, res) {
@@ -11,19 +12,60 @@ class EmployeesController {
     })
   }
 
-  static addForm(req, res) {
-    res.render('employeeAddForm')
+  static registerForm(req, res) {
+    res.render('employeeRegisterForm')
   }
 
-  static add(req, res) {
-    const { name, phone, email, address } = req.body
+  static register(req, res) {
+    const { name, phone, email, address, password, role } = req.body
 
-    Employee.create({ name, phone, email, address })
+    Employee.create({ name, phone, email, address, password, role })
     .then(employee => {
-      res.redirect('/employee')
+      res.redirect('/')
     })
     .catch(err => {
       res.send(err)
+    })
+  }
+
+  static loginForm(req, res) {
+    const { error } = req.query
+
+    res.render('loginForm', { error })
+  }
+
+  static login(req, res) {
+    const { email, password } = req.body
+    console.log(req.body);
+    Employee.findOne({ where: {email} })
+    .then(employee => {
+      if(employee) {
+        const isValidPassword = bcrypt.compareSync(password, employee.password)
+
+        if(isValidPassword) {
+          req.session.employeeId = employee.id
+          req.session.employeeRole = employee.role
+          return res.redirect('/employee')
+        }
+        else {
+          const error = 'invalid email/password'
+          return res.redirect(`/employee/login?error=${error}`)
+        }
+      }
+      else {
+        const error = 'invalid email/password'
+        return res.redirect(`/employee/login?error=${error}`)
+      }
+    })
+    .catch(err => {
+      res.send(err)
+    })
+  }
+
+  static logout(req, res) {
+    req.session.destroy(() => {
+      const error = 'Sukses logout'
+      res.redirect(`/employee/login?error=${error}`)
     })
   }
 

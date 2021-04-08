@@ -1,6 +1,6 @@
 <%-include('partials/header.ejs' , {title : 'Edit Employee'}) %>
-  <div><h2>Edit Employee</h2></div>
-  <div>
+  <div class="container d-flex flex-column justify-content-center align-items-center" style="width: 100vw; height: 70vh;">
+    <p><h2>Edit Employee</h2></p>
     <form action="/employee/edit/<%= employee.id %>" method="POST">
       <table>
         <tr>
@@ -36,8 +36,8 @@
           </td>
         </tr>
       </table>
-      <button type="submit">Save</button>
-      <a href="/employee"><button type="button">Cancel</button></a>
+      <button type="submit" class="btn btn-primary">Save</button>
+      <a href="/employee" class="btn btn-danger">Cancel</a>
     </form>
   </div>
 <%-include('partials/footer.ejs') %>
