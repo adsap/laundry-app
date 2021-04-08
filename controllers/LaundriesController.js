@@ -49,9 +49,13 @@ class LaundriesController {
   }
 
   static add(req, res) {
-    const { CustomerId, EmployeeId, laundry_type, weight, entry_date } = req.body
+    let { CustomerId, EmployeeId, laundry_type, weight, entry_date } = req.body
     let total_cost = priceCalculate(laundry_type, weight);
   
+    if (!laundry_type) {
+      laundry_type = Laundry.getNoType()
+    }
+    
     Laundry.create({ CustomerId, EmployeeId, laundry_type, weight, entry_date, total_cost })
     .then(() => {
       return Laundry.findAll({

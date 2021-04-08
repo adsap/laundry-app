@@ -9,8 +9,8 @@ module.exports = (sequelize, DataTypes) => {
       return this.weight + " KG";
     }
 
-    static getNoAssign() {
-      return 0;
+    static getNoType() {
+      return "full cleaning"
     }
     /**
      * Helper method for defining associations.
