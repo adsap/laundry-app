@@ -1,19 +1,17 @@
 <%-include('partials/header.ejs' , {title : 'List Laundry'}) %>
-<div>
-  <p><a href="laundry/add"><button>Add New Laundry</button></a></p>
-</div>
-<div><h2>Processed Laundry</h2></div>
-  <div>
-    <table border="1">
+  <div class="container d-flex align-items-center justify-content-center flex-column" style="height: 100vh; width: 100vw;">
+    <p><h2>Processed Laundry</h2></p>
+    <table class="table table-hover">
+      <a href="laundry/add" class="btn btn-primary">Add New Laundry</a>
       <thead>
         <tr>
-          <th>ID</th>
-          <th>Customer</th>
-          <th>Employee</th>
-          <th>Laundry Type</th>
-          <th>Weight</th>
-          <th>Entry Date</th>
-          <th>Total Cost</th>
+          <th scope="col">ID</th>
+          <th scope="col">Customer</th>
+          <th scope="col">Employee</th>
+          <th scope="col">Laundry Type</th>
+          <th scope="col">Weight</th>
+          <th scope="col">Entry Date</th>
+          <th scope="col">Total Cost</th>
         </tr>
       </thead>
       <tbody>
@@ -27,28 +25,29 @@
           <td><%= moment(laundry.entry_date).format('YYYY-MM-DD') %></td>
           <td><%= costFormat(laundry.total_cost) %></td>
           <td>
-            <a href="/laundry/edit/<%= laundry.id %>"><button>Edit</button></a>
-            <a href="/laundry/<%= laundry.id %>/finished"><button type="submit">Finish</button></a>
+            <a href="/laundry/edit/<%= laundry.id %>" class="btn btn-warning">Edit</a>
+            <a href="/laundry/<%= laundry.id %>/finished"><button type="submit" class="btn btn-primary">Finish</button></a>
           </td>
         </tr>
-        <% }) %> 
+        <% }) %>
       </tbody>
     </table>
   </div>
-  <div><h2>Finished Laundry</h2></div>
-  <div>
-    <table border="1">
+
+  <div class="container d-flex align-items-center justify-content-center flex-column" style="height: 100vh; width: 100vw;">
+    <p><h2>Finished Laundry</h2></p>
+    <table class="table table-hover">
       <thead>
         <tr>
-          <th>ID</th>
-          <th>Customer</th>
-          <th>Employee</th>
-          <th>Laundry Type</th>
-          <th>Weight</th>
-          <th>Entry Date</th>
-          <th>Finish Date</th>
-          <th>Process Days</th>
-          <th>Total Cost</th>
+          <th scope="col">ID</th>
+          <th scope="col">Customer</th>
+          <th scope="col">Employee</th>
+          <th scope="col">Laundry Type</th>
+          <th scope="col">Weight</th>
+          <th scope="col">Entry Date</th>
+          <th scope="col">Finish Date</th>
+          <th scope="col">Process Days</th>
+          <th scope="col">Total Cost</th>
         </tr>
       </thead>
       <tbody>
@@ -65,7 +64,7 @@
             <td><%= laundryFinished.process_days %></td>
             <td><%= laundryFinished.total_cost %><td></td>
             <td>
-              <a href="laundry/<%= laundryFinished.id %>/notify"><button>Notify</button></a>
+              <a href="laundry/<%= laundryFinished.id %>/notify" class="btn btn-info"><button>Notify</button></a>
             </td>
           </tr>
           <% }) %> 

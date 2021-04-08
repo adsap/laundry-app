@@ -13,7 +13,7 @@ class LaundriesController {
       where: {
         finish_date: null
       },
-      order: [['entry_date', 'DESC']],
+      order: [['entry_date', 'DESC'], ['id', 'DESC']],
       include: [Customer, Employee]
       })
     .then((laundriesData) => {

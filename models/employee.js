@@ -2,6 +2,9 @@
 const {
   Model
 } = require('sequelize');
+
+const bcrypt = require('bcryptjs')
+
 module.exports = (sequelize, DataTypes) => {
   class Employee extends Model {
     /**
@@ -17,24 +20,51 @@ module.exports = (sequelize, DataTypes) => {
     name: {
       type: DataTypes.STRING,
       validate: {
-        isAlpha: true
+        notEmpty: {
+          args: true,
+          msg: 'Nama tidak boleh kosong'
+        }
       }
     },
     phone: {
       type: DataTypes.STRING,
       validate: {
-        isNumeric: true
+        isNumeric: {
+          args: true,
+          msg: 'Hanya boleh input angka'
+        }
       }
     },
     email: {
       type: DataTypes.STRING,
       validate: {
-        isEmail: true
+        notEmpty: {
+          args: true,
+          msg: 'Email harus diisi'
+        }
       }
     },
-    address: DataTypes.STRING
+    address: {
+      type: DataTypes.STRING,
+      validate: {
+        notEmpty: {
+          args: true,
+          msg: 'Address harus diisi'
+        }
+      }
+    },
+    password: DataTypes.STRING,
+    role: DataTypes.STRING
   }, {
     sequelize,
+    hooks: {
+      beforeCreate(instance) {
+        var salt = bcrypt.genSaltSync(10);
+        var hash = bcrypt.hashSync(instance.password, salt)
+
+        instance.password = hash
+      }
+    },
     modelName: 'Employee',
   });
   Employee.associate = function (models) {
