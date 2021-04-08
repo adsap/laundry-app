@@ -52,8 +52,8 @@ class LaundriesController {
     const { CustomerId, EmployeeId, laundry_type, weight, entry_date } = req.body
     let total_cost = priceCalculate(laundry_type, weight);
   
-    Laundry.create({ CustomerId, EmployeeId, laundry_type, weight, entry_date, total_cost, include: [Customer, Employee]})
-    .then(laundry => {
+    Laundry.create({ CustomerId, EmployeeId, laundry_type, weight, entry_date, total_cost })
+    .then(() => {
       return Laundry.findAll({
         limit: 1,
         order: [[ 'createdAt', 'DESC' ]],
@@ -61,7 +61,6 @@ class LaundriesController {
       })
     })
     .then((laundry) => {
-      // console.log(laundry[0].Customer.name)
       const invoice = {
         shipping: {
           name: laundry[0].Customer.name,
@@ -71,12 +70,14 @@ class LaundriesController {
         },
         items: [
           {
+            entry_date: moment(laundry[0].entry_date).format('DD-MM-YYYY'),
             laundry_type: laundry[0].laundry_type,
             weight: laundry[0].weight,
             costkg: laundry[0].total_cost / laundry[0].weight,
             total: laundry[0].total_cost
           }
         ],
+        subtotal: laundry[0].total_cost,
         invoice_nr: laundry[0].id
       }
       createInvoice(invoice, `./invoices/invoice-${laundry[0].id}.pdf`);

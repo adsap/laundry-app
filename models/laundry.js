@@ -8,6 +8,10 @@ module.exports = (sequelize, DataTypes) => {
     getKg() {
       return this.weight + " KG";
     }
+
+    static getNoAssign() {
+      return 0;
+    }
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
