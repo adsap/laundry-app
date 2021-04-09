@@ -6,7 +6,8 @@
   "scripts": {
     "db:setup": "sequelize-cli db:create && sequelize-cli db:migrate && sequelize-cli db:seed:all",
     "db:teardown": "sequelize-cli db:drop",
-    "dev": "nodemon index.js"
+    "dev": "nodemon index.js",
+    "start": "node app.js"
   },
   "repository": {
     "type": "git",
