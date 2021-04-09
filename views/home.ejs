@@ -35,6 +35,11 @@
 <body>
 <div class="login-form">
   <form action="/employee/login" method="post">
+    <% if(notif){ %>
+      <div class="alert alert-success" role="alert">
+          <%= notif %>
+      </div>
+    <% } %>
         <h2 class="text-center">Welcome</h2>       
         <div class="form-group">
             <a href="/employee/login" class="btn btn-primary btn-block">Login</a>
