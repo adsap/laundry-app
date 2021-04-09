@@ -138,7 +138,7 @@ function generateHr(doc, y) {
 }
 
 function formatCurrency(value) {
-  return "Rp. " + value.toLocaleString();
+  return "Rp. " + value.toLocaleString("en");
 }
 
 function formatDate(date) {
