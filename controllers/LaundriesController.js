@@ -86,7 +86,7 @@ class LaundriesController {
         subtotal: laundry[0].total_cost,
         invoice_nr: laundry[0].id
       }
-      createInvoice(invoice, `C:/Users/owner/Documents/invoices/invoice-${laundry[0].id}.pdf`);
+      createInvoice(invoice, `C:/Users/okihu/Downloads/Documents/invoice/invoice-${laundry[0].id}.pdf`);
       res.redirect(`/laundry?notif=berhasil menambahkan data laundry dengan id = ${laundry[0].id}`)
     })
     .catch(err => {
@@ -216,13 +216,13 @@ class LaundriesController {
             port: 465,
             secure: true,
             auth: {
-                user: `####`,
-                pass: `####`
+                user: `hakatest10@gmail.com`,
+                pass: `Question10`
             }
         });
         
         let mailDetails = {
-            from: '####',
+            from: 'hakatest10@gmail.com',
             to: `${data.Customer.email}`,
             subject: 'Pemberitahuan Laundry Selesai',
             text: `
