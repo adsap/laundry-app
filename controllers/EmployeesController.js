@@ -3,9 +3,10 @@ const bcrypt = require('bcryptjs')
 
 class EmployeesController {
   static list(req, res) {
+    const { notif } = req.query;
     Employee.findAll()
     .then(employees => {
-      res.render('employees', { employees })
+      res.render('employees', { employees, notif })
     })
     .catch(err => {
       res.send(err)
@@ -21,10 +22,10 @@ class EmployeesController {
 
     Employee.create({ name, phone, email, address, password, role })
     .then(employee => {
-      res.redirect('/')
+      res.redirect(`/?notif=berhasil register employee ${name}`)
     })
     .catch(err => {
-      res.send(err)
+      err.errors.map(e => res.send(e.message))
     })
   }
 
@@ -98,10 +99,10 @@ class EmployeesController {
       else throw 'employee tidak ditemukan'
     })
     .then(employee => {
-      res.redirect('/employee')
+      res.redirect(`/employee?notif=berhasil update data employee dengan id = ${id}`)
     })
     .catch(err => {
-      res.send(err)
+      err.errors.map(e => res.send(e.message))
     })
   }
 
@@ -114,7 +115,7 @@ class EmployeesController {
       else throw 'employee tidak ditemukan'
     })
     .then(() => {
-      res.redirect('/employee')
+      res.redirect(`/employee?notif=berhasil delete data employee dengan id = ${id}`)
     })
     .catch(err => {
       res.send(err)

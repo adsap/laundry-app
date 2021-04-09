@@ -8,6 +8,7 @@ const nodemailer = require('nodemailer');
 
 class LaundriesController {
   static list(req, res) {
+    const { notif } = req.query;
     let laundries
     Laundry.findAll({
       where: {
@@ -26,7 +27,7 @@ class LaundriesController {
       })
     })
     .then(laundriesFinished => {
-      res.render('laundries', { laundries, laundriesFinished, costFormat, moment })
+      res.render('laundries', { laundries, laundriesFinished, costFormat, moment, notif })
     })
     .catch(err => {
       res.send(err)
@@ -85,11 +86,11 @@ class LaundriesController {
         subtotal: laundry[0].total_cost,
         invoice_nr: laundry[0].id
       }
-      createInvoice(invoice, `./invoices/invoice-${laundry[0].id}.pdf`);
-      res.redirect('/laundry')
+      createInvoice(invoice, `C:/Users/owner/Documents/invoices/invoice-${laundry[0].id}.pdf`);
+      res.redirect(`/laundry?notif=berhasil menambahkan data laundry dengan id = ${laundry[0].id}`)
     })
     .catch(err => {
-      res.send(err)
+      err.errors.map(e => res.send(e.message))
     })
     
   }
@@ -148,10 +149,10 @@ class LaundriesController {
       else throw 'laundry tidak ditemukan'
     })
     .then(laundry => {
-      res.redirect('/laundry')
+      res.redirect(`/laundry?notif=berhasil update data laundry dengan id = ${id}`)
     })
     .catch(err => {
-      res.send(err)
+      err.errors.map(e => res.send(e.message))
     })
   }
 
@@ -164,7 +165,7 @@ class LaundriesController {
       else throw 'laundry tidak ditemukan'
     })
     .then(() => {
-      res.redirect('/laundry')
+      res.redirect(`/laundry?notif=berhasil delete data laundry dengan id = ${id}`)
     })
     .catch(err => {
       res.send(err)
@@ -197,7 +198,7 @@ class LaundriesController {
       else throw 'laundry tidak ditemukan'
     })
     .then(laundry => {
-      res.redirect('/laundry')
+      res.redirect(`/laundry?notif=laundry dengan id = ${id} telah selesai`)
     })
     .catch(err => {
       res.send(err)
@@ -235,7 +236,7 @@ class LaundriesController {
             if(err) {
                 console.log(err)
             } else {
-                res.redirect(`/laundry`);
+                res.redirect(`/laundry?notif=laundry dengan id = ${id} telah dikirim email pemberitahuan`);
             }
         });
     })

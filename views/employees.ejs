@@ -1,5 +1,10 @@
 <%-include('partials/header.ejs' , {title : 'List Employee'}) %>
   <div class="container d-flex align-items-center justify-content-center flex-column" style="height: 100vh; width: 100vw;">
+    <% if(notif){ %>
+      <div class="alert alert-success" role="alert">
+          <%= notif %>
+      </div>
+    <% } %>
     <p><h2>List Employee</h2></p>
     <table class="table table-hover">
     <thead>

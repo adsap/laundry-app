@@ -9,6 +9,11 @@
 </head>
 <body>
   <div class="container d-flex flex-column justify-content-center align-items-center" style="width: 100vw; height: 70vh;">
+    <% if(notif){ %>
+      <div class="alert alert-success" role="alert">
+          <%= notif %>
+      </div>
+    <% } %>
     <h1>Welcome</h1>
     <a href="/employee/register" class="btn btn-success">Register</a>
     <a href="/employee/login" class="btn btn-primary">Login</a>
