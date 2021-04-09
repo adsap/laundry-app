@@ -86,7 +86,7 @@ class LaundriesController {
         subtotal: laundry[0].total_cost,
         invoice_nr: laundry[0].id
       }
-      createInvoice(invoice, `C:/Users/okihu/Downloads/Documents/invoice/invoice-${laundry[0].id}.pdf`);
+      createInvoice(invoice, `./invoice/invoice-${laundry[0].id}.pdf`);
       res.redirect(`/laundry?notif=berhasil menambahkan data laundry dengan id = ${laundry[0].id}`)
     })
     .catch(err => {
