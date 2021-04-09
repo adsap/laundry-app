@@ -1,0 +1,43 @@
+<%-include('partials/header.ejs' , {title : 'Edit Customer'}) %>
+  <div class="container d-flex flex-column justify-content-center align-items-center" style="width: 100vw; height: 70vh;">
+    <p><h2>Edit Customer</h2></p>
+    <form action="/customer/edit/<%= customer.id %>" method="POST">
+      <table>
+        <tr>
+          <td>
+            <label for="name">Name:</label>
+          </td>
+          <td>
+            <input type="text" name="name" id="name" value="<%= customer.name %>">
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label for="phone">Phone:</label>
+          </td>
+          <td>
+            <input type="text" name="phone" id="phone" value="<%= customer.phone %>">
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label for="email">Email:</label>
+          </td>
+          <td>
+            <input type="email" name="email" id="email" value="<%= customer.email %> ">
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label for="address">Address:</label>
+          </td>
+          <td>
+            <input type="text" name="address" id="address" value="<%= customer.address %> ">
+          </td>
+        </tr>
+      </table>
+      <button type="submit" class="btn btn-primary">Save</button>
+      <a href="/customer" class="btn btn-danger">Cancel</a>
+    </form>
+  </div>
+<%-include('partials/footer.ejs') %>

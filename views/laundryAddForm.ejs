@@ -1,0 +1,69 @@
+<%-include('partials/header.ejs' , {title : 'Add New Laundry'}) %>
+<div class="container d-flex align-items-center justify-content-center flex-column" style="height: 70vh; width: 100vw;">
+  <p><h2>Add New Laundry</h2></p>
+    <form action="/laundry/add" method="POST">
+      <table>
+        <tr>
+          <td>
+            <label for="customer">Customer:</label>
+          </td>
+          <td>
+            <select name="CustomerId" id="CustomerId">
+              <option value="">Select</option>
+              <% if (customers) { %>
+                <% customers.forEach(customer => { %>
+                  <option value="<%= customer.id %>"><%= customer.name %></option>
+                <% }) %>
+              <% } %>
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label for="employee">Employee:</label>
+          </td>
+          <td>
+            <select name="EmployeeId" id="EmployeeId">
+              <option value="">Select</option>
+              <% if (employees) { %>
+                <% employees.forEach(employee => { %>
+                  <option value="<%= employee.id %>"><%= employee.name %></option>
+                <% }) %>
+              <% } %>
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label for="laundry_type">Laundry Type:</label>
+          </td>
+          <td>
+            <select name="laundry_type" id="laundry_type">
+              <option value="">Select</option>
+              <option value="dry cleaning">Dry Cleaning</option>
+              <option value="full cleaning">Full Cleaning</option>
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label for="weight">Weight:</label>
+          </td>
+          <td>
+            <input type="number" step="any" min="0.5" name="weight" id="weight">
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label for="entry_date">Entry Date:</label>
+          </td>
+          <td>
+            <input type="date" name="entry_date" id="entry_date">
+          </td>
+        </tr>
+      </table>
+      <button type="submit" class="btn btn-primary">Save</button>
+      <a href="/laundry" class="btn btn-danger">Cancel</a>
+    </form>
+  </div>
+<%-include('partials/footer.ejs') %>

@@ -1,0 +1,35 @@
+<%-include('partials/header.ejs' , {title : 'List Employee'}) %>
+  <div class="container d-flex align-items-center justify-content-center flex-column" style="height: 100vh; width: 100vw;">
+    <% if(notif){ %>
+      <div class="alert alert-success" role="alert">
+          <%= notif %>
+      </div>
+    <% } %>
+    <p><h2>List Employee</h2></p>
+    <table class="table table-hover">
+    <thead>
+      <tr>
+        <th scope="col">Name</th>
+        <th scope="col">Phone</th>
+        <th scope="col">Email</th>
+        <th scope="col">Address</th>
+        <th scope="col">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% employees.forEach(employee => { %>
+        <tr class="table-success">
+          <td><a href="/employee/<%= employee.id %>"><%= employee.name %></a></td>
+          <td><%= employee.phone %></td>
+          <td><%= employee.email %></td>
+          <td><%= employee.address %></td>
+          <td>
+            <a href="/employee/edit/<%= employee.id %>" class="btn btn-warning">Edit</a>
+            <a href="/employee/delete/<%= employee.id %>" class="btn btn-danger">Delete</a>
+          </td>
+        </tr>
+        <% }) %>
+    </tbody>
+    </table>
+  </div>
+<%-include('partials/footer.ejs') %>

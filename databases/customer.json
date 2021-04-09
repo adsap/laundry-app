@@ -1,0 +1,14 @@
+[
+    {
+        "name": "Obi Wan",
+        "phone": "08812381236",
+        "email": "obiwan@mail.com",
+        "address": "jl. apel raya no. 10"
+    },
+    {
+        "name": "Darth Vader",
+        "phone": "09812365234",
+        "email": "darthvader@mail.com",
+        "address": "jl. obelisk no. 22"
+    }
+]

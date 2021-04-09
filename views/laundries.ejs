@@ -1,0 +1,77 @@
+<%-include('partials/header.ejs' , {title : 'List Laundry'}) %>
+  <div class="container d-flex align-items-center justify-content-center flex-column" style="height: 100vh; width: 100vw;">
+    <p><h2>Processed Laundry</h2></p>
+    <table class="table table-hover">
+      <div class="form-group">
+        <a href="laundry/add" class="btn btn-primary">Add New Laundry</a>
+      </div>
+      <thead>
+        <tr>
+          <th scope="col">ID</th>
+          <th scope="col">Customer</th>
+          <th scope="col">Employee</th>
+          <th scope="col">Laundry Type</th>
+          <th scope="col">Weight</th>
+          <th scope="col">Entry Date</th>
+          <th scope="col">Total Cost</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% laundries.forEach(laundry => { %>
+        <tr>
+          <td><a href="/laundry/<%= laundry.id %>"><%= laundry.id %></a></td>
+          <td><%= laundry.Customer.name %></td>
+          <td><%= laundry.Employee.name %></td>
+          <td><%= laundry.laundry_type %></td>
+          <td><%= laundry.getKg() %></td>
+          <td><%= moment(laundry.entry_date).format('YYYY-MM-DD') %></td>
+          <td><%= costFormat(laundry.total_cost) %></td>
+          <td>
+            <a href="/laundry/edit/<%= laundry.id %>" class="btn btn-warning">Edit</a>
+            <a href="/laundry/<%= laundry.id %>/finished"><button type="submit" class="btn btn-primary">Finish</button></a>
+          </td>
+        </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="container d-flex align-items-center justify-content-center flex-column" style="height: 100vh; width: 100vw;">
+    <p><h2>Finished Laundry</h2></p>
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th scope="col">ID</th>
+          <th scope="col">Customer</th>
+          <th scope="col">Employee</th>
+          <th scope="col">Laundry Type</th>
+          <th scope="col">Weight</th>
+          <th scope="col">Entry Date</th>
+          <th scope="col">Finish Date</th>
+          <th scope="col">Process Days</th>
+          <th scope="col">Total Cost</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% if (laundriesFinished) { %>
+          <% laundriesFinished.forEach(laundryFinished => { %>
+          <tr>
+            <td><%= laundryFinished.id %></td>
+            <td><%= laundryFinished.Customer.name %></td>
+            <td><%= laundryFinished.Employee.name %></td>
+            <td><%= laundryFinished.laundry_type %></td>
+            <td><%= laundryFinished.getKg() %></td>
+            <td><%= moment(laundryFinished.entry_date).format('YYYY-MM-DD') %></td>
+            <td><%= moment(laundryFinished.finish_date).format('YYYY-MM-DD') %></td>
+            <td><%= laundryFinished.process_days %></td>
+            <td><%= laundryFinished.total_cost %><td></td>
+            <td>
+              <a href="laundry/<%= laundryFinished.id %>/notify" class="btn btn-info">Notify</a>
+            </td>
+          </tr>
+          <% }) %> 
+        <% } %>
+      </tbody>
+    </table>
+  </div>
+<%-include('partials/footer.ejs') %>
