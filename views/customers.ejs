@@ -1,13 +1,10 @@
 <%-include('partials/header.ejs' , {title : 'List Customer'}) %>
   <div class="container d-flex align-items-center justify-content-center flex-column" style="height: 100vh; width: 100vw;">
-    <% if(notif){ %>
-      <div class="alert alert-success" role="alert">
-          <%= notif %>
-      </div>
-    <% } %>
     <p><h2>List Customer</h2></p>
     <table class="table table-hover">
-    <a href="customer/add" class="btn btn-primary">Add New Customer</a>
+      <div class="form-group">
+        <a href="customer/add" class="btn btn-primary">Add New Customer</a>
+      </div>
     <thead>
       <tr>
         <th scope="col">Name</th>
@@ -20,12 +17,13 @@
     <tbody>
       <% customers.forEach(customer => { %>
       <tr class="table-success">
-        <td><a href="/customer/<%= customer.id %>"><%= customer.name %></a></td>
+        <td><%= customer.name %></td>
         <td><%= customer.phone %></td>
         <td><%= customer.email %></td>
         <td><%= customer.address %></td>
         <td>
           <a href="/customer/edit/<%= customer.id %>" class="btn btn-warning">Edit</a>
+          <a href="/customer/<%= customer.id %>" class="btn btn-info">Detail</a>
           <a href="/customer/delete/<%= customer.id %>" class="btn btn-danger">Delete</a>
         </td>
       </tr>
