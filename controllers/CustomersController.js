@@ -2,9 +2,10 @@ const { Customer } = require('../models')
 
 class CustomersController {
   static list(req, res) {
+    const { notif } = req.query;
     Customer.findAll()
     .then(customers => {
-      res.render('customers', { customers })
+      res.render('customers', { customers, notif })
     })
     .catch(err => {
       res.send(err)
@@ -20,10 +21,10 @@ class CustomersController {
 
     Customer.create({ name, phone, email, address })
     .then(customer => {
-      res.redirect('/customer')
+      res.redirect(`/customer?notif=berhasil menambahkan customer ${name}`)
     })
     .catch(err => {
-      res.send(err)
+      err.errors.map(e => res.send(e.message))
     })
   }
 
@@ -56,10 +57,10 @@ class CustomersController {
       else throw 'customer tidak ditemukan'
     })
     .then(customer => {
-      res.redirect('/customer')
+      res.redirect(`/customer?notif=berhasil update data customer dengan id = ${id}`)
     })
     .catch(err => {
-      res.send(err)
+      err.errors.map(e => res.send(e.message))
     })
   }
 
@@ -72,7 +73,7 @@ class CustomersController {
       else throw 'customer tidak ditemukan'
     })
     .then(() => {
-      res.redirect('/customer')
+      res.redirect(`/customer?notif=berhasil delete data customer dengan id = ${id}`)
     })
     .catch(err => {
       res.send(err)

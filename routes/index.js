@@ -4,7 +4,8 @@ const customerRouter = require('./customer')
 const laundryRouter = require('./laundry')
 
 router.get('/', (req, res) => {
-  res.render('home')
+  const { notif } = req.query
+  res.render('home', { notif })
 })
 router.use('/employee', employeeRouter)
 router.use('/customer', customerRouter)

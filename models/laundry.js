@@ -23,11 +23,47 @@ module.exports = (sequelize, DataTypes) => {
     
   };
   Laundry.init({
-    CustomerId: DataTypes.INTEGER,
-    EmployeeId: DataTypes.INTEGER,
+    CustomerId: {
+      type: DataTypes.INTEGER,
+      validate: {
+        notEmpty: {
+          args: true,
+          msg: 'Customer tidak boleh kosong'
+        },
+        isNumeric: true
+      }
+    },
+    EmployeeId: {
+      type: DataTypes.INTEGER,
+      validate: {
+        notEmpty: {
+          args: true,
+          msg: 'Employee tidak boleh kosong'
+        },
+        isNumeric: true
+      }
+    },
     laundry_type: DataTypes.STRING,
-    weight: DataTypes.FLOAT,
-    entry_date: DataTypes.DATE,
+    weight: {
+      type: DataTypes.FLOAT,
+      validate: {
+        notEmpty: {
+          args: true,
+          msg: 'Weight tidak boleh kosong'
+        },
+        isFloat: true
+      }
+    },
+    entry_date: {
+      type: DataTypes.DATE,
+      validate: {
+        notEmpty: {
+          args: true,
+          msg: 'Entry date tidak boleh kosong'
+        },
+        isDate: true
+      }
+    },
     finish_date: DataTypes.DATE,
     process_days: DataTypes.INTEGER,
     total_cost: DataTypes.INTEGER

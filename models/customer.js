@@ -18,22 +18,42 @@ module.exports = (sequelize, DataTypes) => {
     name: {
       type: DataTypes.STRING,
       validate: {
+        notEmpty: {
+          args: true,
+          msg: 'Nama tidak boleh kosong'
+        },
         isAlpha: true
       }
     },
     phone: {
       type: DataTypes.STRING,
       validate: {
+        notEmpty: {
+          args: true,
+          msg: 'Phone tidak boleh kosong'
+        },
         isNumeric: true
       }
     },
     email: {
       type: DataTypes.STRING,
       validate: {
+        notEmpty: {
+          args: true,
+          msg: 'Email tidak boleh kosong'
+        },
         isEmail: true
       }
     },
-    address: DataTypes.STRING
+    address: {
+      type: DataTypes.STRING,
+      validate: {
+        notEmpty: {
+          args: true,
+          msg: 'Address tidak boleh kosong'
+        }
+      }
+    }
   }, {
     sequelize,
     modelName: 'Customer',
